@@ -1,0 +1,307 @@
+\documentclass[11pt]{amsart}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,microtype,amsmath,amssymb,amsthm,mathtools,enumitem}
+\usepackage[margin=1.1in]{geometry}
+\usepackage[hidelinks]{hyperref}
+\usepackage{xurl}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\numberwithin{equation}{section}
+
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Hp}{\mathbb{C}^+}
+\newcommand{\bp}{\boxplus}
+\newcommand{\eps}{\varepsilon}
+\DeclareMathOperator{\Log}{Log}
+
+\hypersetup{pdftitle={Only point masses are freely strongly unimodal},pdfauthor={Yitzchak Shmalo}}
+
+\title{Only point masses are freely strongly unimodal}
+\author{Yitzchak Shmalo}
+\address{Einstein Institute of Mathematics, The Hebrew University of Jerusalem, Jerusalem, Israel}
+\email{yitzchak.shmalo@gmail.com}
+\date{6 November 2026}
+\subjclass[2020]{46L54, 60E05, 30C80}
+\keywords{free additive convolution, unimodality, strong unimodality, subordination, Schwarz--Pick lemma}
+
+\begin{document}
+\begin{abstract}
+A probability measure $\mu$ on $\R$ is called freely strongly unimodal if $\mu\bp\nu$ is unimodal for every unimodal probability measure $\nu$. Hasebe and Ueda showed that a measure with finite variance has this property only if it is a point mass, and asked whether any measure other than a point mass has it. We show that none does. For every probability measure $\mu$ that is not a point mass, the free convolution of $\mu$ with $\frac1{100}\delta_0+\frac{99}{100}\,U[0,L]$, where $U[0,L]$ is the uniform law on $[0,L]$, fails to be unimodal for all sufficiently large $L$. No moment condition is needed. The proof works with a small dilation of $\mu$, describes its inverse reciprocal Cauchy transform on a disc in the lower half-plane, and controls the resulting perturbation of the density by the Schwarz--Pick lemma.
+\end{abstract}
+\maketitle
+
+\section{Introduction}\label{sec:intro}
+
+A Borel probability measure $\nu$ on $\R$ is \emph{unimodal} if there is $a\in\R$ such that
+\[
+\nu=\nu(\{a\})\,\delta_a+f(x)\,dx,
+\]
+where $f$ is nondecreasing on $(-\infty,a)$ and nonincreasing on $(a,\infty)$. In classical probability, $\mu$ is strongly unimodal if $\mu*\nu$ is unimodal for every unimodal $\nu$; by Ibragimov's theorem these are exactly the measures that are absolutely continuous, supported on an interval, with a log-concave density (or point masses), so the normal laws are examples \cite[Theorem~52.3]{Sa13}. Hasebe and Ueda \cite{HU18} introduced the free analogue.
+
+\begin{definition}[{\cite[Definition~3.8]{HU18}}]
+A probability measure $\mu$ on $\R$ is \emph{freely strongly unimodal} if $\mu\bp\nu$ is unimodal for all unimodal distributions $\nu$ on $\R$.
+\end{definition}
+
+Here $\bp$ is the free additive convolution, defined for arbitrary Borel probability measures by Bercovici and Voiculescu \cite{BV93}. A point mass $\delta_a$ is freely strongly unimodal, since $\delta_a\bp\nu$ is the translate of $\nu$ by $a$. Hasebe and Ueda proved that semicircle laws are not freely strongly unimodal \cite[Lemma~3.9]{HU18}, and deduced from the free central limit theorem that no measure with finite variance other than a point mass is \cite[Theorem~3.10]{HU18}. They asked:
+
+\begin{quote}
+\emph{Problem 3.11 of \cite{HU18}.} Does there exist a freely strongly unimodal probability measure that is not a delta measure?
+\end{quote}
+
+The answer is no.
+
+\begin{theorem}\label{thm:main}
+Let $\mu$ be a Borel probability measure on $\R$ that is not a point mass, and for $L>0$ let
+\[
+\nu_L=\tfrac1{100}\,\delta_0+\tfrac{99}{100}\,U[0,L].
+\]
+Each $\nu_L$ is unimodal, and there is $L_0=L_0(\mu)$ such that $\mu\bp\nu_L$ is not unimodal for every $L>L_0$. Consequently the freely strongly unimodal probability measures on $\R$ are exactly the point masses.
+\end{theorem}
+
+The finite-variance argument of \cite{HU18} rescales $\mu^{\bp n}$ towards a semicircle law and so needs the second moment. Here we scale $\mu$ the other way. With $\eps=1/L$, the dilation $D_\eps$ (the push-forward under $x\mapsto\eps x$) carries $\mu\bp\nu_L$ to $D_\eps\mu\bp\kappa$, where
+\begin{equation}\label{eq:kappa}
+\kappa=p\,\delta_0+q\,U[0,1],\qquad p=\tfrac1{100},\quad q=\tfrac{99}{100}.
+\end{equation}
+The law $\kappa$ has an atom at its mode $0$ and the constant density $q$ on $(0,1)$. As $\eps\to0$ the measure $D_\eps\mu$ tends to $\delta_0$, and $D_\eps\mu\bp\kappa$ is a small perturbation of $\kappa$. The point is that the perturbation of the density on $(0,1)$ is not flat: to first order it is governed by a single holomorphic function, with values in the lower half-plane, evaluated along the curve $x\mapsto G_\kappa(x+i0)$, and the Schwarz--Pick lemma forces this function to have comparable size at two points of the curve. The curvature of the curve near $x=1/100$, coming from the atom, then produces a dip in the density that no tail behaviour of $\mu$ can cancel. Section~\ref{sec:prelim} collects the analytic facts we use, Section~\ref{sec:proof} proves Theorem~\ref{thm:main}, and Section~\ref{sec:numerics} reports a numerical check.
+
+\section{Preliminaries}\label{sec:prelim}
+
+For a Borel probability measure $\eta$ on $\R$ and $z$ in the upper half-plane $\Hp$ put
+\[
+G_\eta(z)=\int_\R\frac{\eta(ds)}{z-s},\qquad F_\eta(z)=\frac1{G_\eta(z)},\qquad h_\eta(z)=F_\eta(z)-z .
+\]
+The function $F_\eta$ maps $\Hp$ to $\Hp$.
+
+\begin{lemma}\label{lem:F}
+$\operatorname{Im}F_\eta(z)\ge\operatorname{Im}z$ for $z\in\Hp$, with strict inequality at every $z$ when $\eta$ is not a point mass.
+\end{lemma}
+
+\begin{proof}
+We have $\operatorname{Im}G_\eta(z)=-\operatorname{Im}z\int|z-s|^{-2}\,\eta(ds)$, so
+\[
+\operatorname{Im}F_\eta(z)=\frac{-\operatorname{Im}G_\eta(z)}{|G_\eta(z)|^2}=\operatorname{Im}z\cdot\frac{\int|z-s|^{-2}\,\eta(ds)}{\bigl|\int(z-s)^{-1}\,\eta(ds)\bigr|^2}.
+\]
+By the Cauchy--Schwarz inequality the last quotient is at least $1$, with equality only if $s\mapsto(z-s)^{-1}$ is $\eta$-almost everywhere constant, that is, only if $\eta$ is a point mass.
+\end{proof}
+
+We use the analytic subordination theorem for free additive convolution of arbitrary Borel probability measures \cite{Bi98,BB07,Vo93}: if $\sigma=\lambda\bp\kappa$, there are analytic maps $\omega_\lambda,\omega_\kappa\colon\Hp\to\Hp$ with
+\begin{equation}\label{eq:sub}
+F_\lambda(\omega_\lambda(z))=F_\kappa(\omega_\kappa(z))=F_\sigma(z),\qquad \omega_\lambda(z)+\omega_\kappa(z)=z+F_\sigma(z).
+\end{equation}
+We need that \eqref{eq:sub} determines $F_\sigma(z)$ pointwise.
+
+\begin{lemma}\label{lem:unique}
+Fix $z\in\Hp$. If $\omega_1,\omega_2,u\in\Hp$ satisfy $F_\lambda(\omega_1)=F_\kappa(\omega_2)=u$ and $\omega_1+\omega_2=z+u$, then $u=F_\sigma(z)$.
+\end{lemma}
+
+\begin{proof}
+From the two equations, $\omega_1=z+h_\kappa(\omega_2)$ and $\omega_2=z+h_\lambda(\omega_1)$, so $\omega_2$ is a fixed point of $T_z(v)=z+h_\lambda(z+h_\kappa(v))$. By Lemma~\ref{lem:F}, $h_\kappa$ and $h_\lambda$ map $\Hp$ into $\{\operatorname{Im}\ge0\}$, so $T_z$ is a holomorphic map of $\Hp$ into $\{\operatorname{Im}v\ge\operatorname{Im}z\}$; in particular it is not the identity. A holomorphic self-map of $\Hp$ other than the identity has at most one fixed point in $\Hp$, by the Schwarz lemma transported to the half-plane. The subordination functions provide one fixed point, $\omega_\kappa(z)$, so $\omega_2=\omega_\kappa(z)$ and $u=F_\kappa(\omega_2)=F_\sigma(z)$.
+\end{proof}
+
+\begin{lemma}\label{lem:inverse}
+Let $\mu$ be a probability measure that is not a point mass, $\lambda_\eps=D_\eps\mu$, and let $\mathcal D$ be an open disc whose closure lies in the lower half-plane. Put $U=\{1/w:w\in\overline{\mathcal D}\}$, a compact subset of $\Hp$. There are a bounded open set $V$ with $U\subset V\subset\overline V\subset\Hp$ and $\eps_0>0$ such that for $0<\eps<\eps_0$:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $F_{\lambda_\eps}$ is injective on $V$, and there is a holomorphic $H_\eps$ on a neighbourhood of $U$ with values in $V$ and $F_{\lambda_\eps}\circ H_\eps=\mathrm{id}$;
+\item the function $R_\eps(w)=H_\eps(1/w)-1/w$ is holomorphic on a neighbourhood of $\overline{\mathcal D}$, satisfies $\operatorname{Im}R_\eps<0$ there, and $\sup_{\overline{\mathcal D}}|R_\eps|\to0$ as $\eps\to0$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+For $z\in\Hp$, $G_{\lambda_\eps}(z)=\int(z-\eps s)^{-1}\mu(ds)$, and $|z-\eps s|\ge\operatorname{Im}z$, so by dominated convergence $G_{\lambda_\eps}(z)\to1/z$ pointwise. The family is bounded by $1/\operatorname{Im}z$, so by Vitali's theorem the convergence is locally uniform on $\Hp$, together with all derivatives, and the same holds for $F_{\lambda_\eps}\to\mathrm{id}$.
+
+Let $\delta>0$ be less than half the distance from $U$ to $\R$, and let $V$ be the open $2\delta$-neighbourhood of the convex hull of $U$; it is convex, bounded, and $\overline V\subset\Hp$. Choose $\eps_0$ so that $|F_{\lambda_\eps}'-1|<1/2$ and $|F_{\lambda_\eps}-\mathrm{id}|<\delta/2$ on $\overline V$ for $\eps<\eps_0$. Integrating along segments gives $\operatorname{Re}\frac{F_{\lambda_\eps}(\omega)-F_{\lambda_\eps}(\omega')}{\omega-\omega'}>\frac12$ on $V$, so $F_{\lambda_\eps}$ is injective there. For $u'$ within $\delta/2$ of $U$, Rouch\'e's theorem on the circle $|\omega-u'|=\delta$ (which lies in $V$) shows that $F_{\lambda_\eps}(\omega)=u'$ has exactly one solution in that disc; this defines $H_\eps$, which is holomorphic as the inverse of an injective holomorphic map. Since $H_\eps(u')-u'=H_\eps(u')-F_{\lambda_\eps}(H_\eps(u'))$, we get $|H_\eps(u')-u'|\le\sup_{V}|F_{\lambda_\eps}-\mathrm{id}|\to0$.
+
+This gives (i) and the last assertion of (ii). For the sign, let $u=1/w$ with $w$ near $\overline{\mathcal D}$ and $\omega=H_\eps(u)\in\Hp$. Since $\lambda_\eps$ is not a point mass, Lemma~\ref{lem:F} gives $\operatorname{Im}u=\operatorname{Im}F_{\lambda_\eps}(\omega)>\operatorname{Im}\omega$, so $\operatorname{Im}R_\eps(w)=\operatorname{Im}(\omega-u)<0$.
+\end{proof}
+
+No moment of $\mu$ enters Lemma~\ref{lem:inverse}, and no global inverse of $F_{\lambda_\eps}$ is used.
+
+\section{Proof of Theorem~\ref{thm:main}}\label{sec:proof}
+
+\subsection{The reference measure and the disc}
+Let $\kappa$ be as in \eqref{eq:kappa}. Then
+\[
+G_\kappa(z)=\frac pz+q\bigl(\log z-\log(z-1)\bigr),
+\]
+and for $0<x<1$ its boundary value from $\Hp$ is $G_\kappa(x+i0)=g(x)-ic$, where
+\[
+g(x)=\frac px+q\log\frac{x}{1-x},\qquad c=\pi q .
+\]
+For $z$ near a point of $(0,1)$ put
+\[
+A(z)=\frac pz+q\bigl(\Log z-\Log(1-z)-i\pi\bigr)
+\]
+with the principal branch of $\Log$. Then $A$ is holomorphic on a neighbourhood of $(0,1)$, agrees with $G_\kappa$ on its intersection with $\Hp$, and $A(x)=g(x)-ic$ for real $x\in(0,1)$. In particular $A'(x)=g'(x)$ is real there. Direct differentiation gives
+\begin{equation}\label{eq:g}
+g'(x)=\frac{x-p}{x^2(1-x)},\qquad g''(x)=\frac{2p}{x^3}+q\Bigl(\frac1{(1-x)^2}-\frac1{x^2}\Bigr).
+\end{equation}
+
+Let $x_1=p=1/100$ and $x_2=1/4$. By \eqref{eq:g},
+\begin{equation}\label{eq:gvals}
+g'(x_1)=0,\qquad g''(x_1)=\frac{1000000}{99},\qquad g'(x_2)=\frac{128}{25},\qquad g''(x_2)=-\frac{64}{5}.
+\end{equation}
+Put $w_j=g(x_j)-ic$ and
+\[
+b=g(x_2)-10i,\qquad r=\tfrac{99}{10},\qquad \mathcal D=\{w:|w-b|<r\}.
+\]
+The closure of $\mathcal D$ lies in $\{\operatorname{Im}w\le-1/10\}$. Since $3<\pi<4$ we have $2.97<c<3.96$. Let $d=g(x_1)-g(x_2)=\frac{24}{25}-\frac{99}{100}\log33$; since $1<\log 33<4$, $|d|<3$. Now $w_2-b=i(10-c)$ and $w_1-b=d+i(10-c)$, so
+\[
+|w_2-b|<7.03<r,\qquad |w_1-b|^2<9+7.03^2<r^2,
+\]
+and both $w_j$ lie in $\mathcal D$. Write $\Delta=r^2-(10-c)^2$. Then
+\[
+\Delta>98.01-7.03^2=48.5891,\qquad \frac{2r}{\Delta}<\frac{19.8}{48.5891}<\frac5{12}.
+\]
+The pseudohyperbolic distance of $w_1$ and $w_2$ in $\mathcal D$ is
+\[
+\rho=\frac{r|w_1-w_2|}{\bigl|r^2-(w_1-b)\overline{(w_2-b)}\bigr|}=\frac{r|d|}{|\Delta+id(10-c)|}\le\frac{r|d|}{\Delta}<\frac{29.7}{48.5891}<\frac23 .
+\]
+(Numerically $\Delta\approx50.54$, $d\approx-2.5015$ and $\rho\approx0.464$.)
+
+\subsection{The perturbation and its size}
+Fix $\mu$, not a point mass, and apply Lemma~\ref{lem:inverse} to $\lambda_\eps=D_\eps\mu$ and the disc $\mathcal D$. Put
+\[
+a_\eps=\operatorname{Re}R_\eps(w_2),\qquad t_\eps=-\operatorname{Im}R_\eps(w_2)>0,\qquad B_\eps=R_\eps-a_\eps .
+\]
+Then $t_\eps\to0$, $B_\eps$ maps $\mathcal D$ into the lower half-plane, and $B_\eps(w_2)=-it_\eps$. Write $t=t_\eps$, $B=B_\eps$ and $K=-\operatorname{Im}B>0$ on $\mathcal D$.
+
+\begin{lemma}\label{lem:SP}
+For every compact $M\subset\mathcal D$ and every $k\ge0$ there is $C_{M,k}$, independent of $\eps$, with $|B^{(k)}|\le C_{M,k}\,t$ on $M$. Moreover
+\[
+K(w_1)>\tfrac15\,t,\qquad K(w_2)=t,\qquad |\partial_xK(w_2)|<\tfrac5{12}\,t,
+\]
+where $\partial_x$ is the derivative in the real direction.
+\end{lemma}
+
+\begin{proof}
+Since $\operatorname{Im}B<0$ and $t>0$, the function $\phi=(B+it)/(B-it)$ maps $\mathcal D$ into the unit disc and $\phi(w_2)=0$. By the Schwarz--Pick lemma, $|\phi(w)|\le\rho_{\mathcal D}(w,w_2)$ and $|\phi'(w_2)|\le r/(r^2-|w_2-b|^2)=r/\Delta$. Solving for $B$,
+\[
+B=-it\,\frac{1+\phi}{1-\phi},\qquad K=t\,\frac{1-|\phi|^2}{|1-\phi|^2}\ \ge\ t\,\frac{1-|\phi|}{1+|\phi|}.
+\]
+On a compact $M\subset\mathcal D$ we have $\sup_M|\phi|\le\sup_{w\in M}\rho_{\mathcal D}(w,w_2)<1$, which bounds $B$ by a multiple of $t$ on $M$; Cauchy's estimates on a slightly larger compact set bound the derivatives. At $w_1$, $K(w_1)\ge t(1-\rho)/(1+\rho)>t\cdot\frac{1/3}{5/3}=t/5$. Finally $B'(w_2)=-2it\,\phi'(w_2)$, so $|\partial_xK(w_2)|=|\operatorname{Im}B'(w_2)|\le|B'(w_2)|\le 2rt/\Delta<\frac5{12}t$.
+\end{proof}
+
+\subsection{The density of the convolution}
+Let $\tilde\lambda_\eps$ be the translate of $\lambda_\eps$ by $-a_\eps$, so that $F_{\tilde\lambda_\eps}(\omega)=F_{\lambda_\eps}(\omega+a_\eps)$, and let $\sigma_\eps=\tilde\lambda_\eps\bp\kappa$. Fix $j\in\{1,2\}$ and a closed disc $N_j$ centred at $x_j$, small enough that $A$ is holomorphic on a neighbourhood of $N_j$ and $A(N_j)$ is contained in a compact set $M\subset\mathcal D$ with $\operatorname{dist}(A(N_j),\partial M)>0$.
+
+For $z\in N_j$ consider the equation
+\begin{equation}\label{eq:W}
+W=A\bigl(z-B(W)\bigr).
+\end{equation}
+By Lemma~\ref{lem:SP}, $B$ and $B'$ are $O(t)$ on $M$, so for small $\eps$ the right side of \eqref{eq:W} maps the closed disc of radius $C t$ about $A(z)$ into itself and is a contraction there, for a suitable $C$ independent of $\eps$ and $z$, after shrinking $N_j$ slightly. The fixed point $W_\eps(z)$ is holomorphic in $z$ (the iterates converge uniformly), lies in $M$, and satisfies $W_\eps=A+O(t)$ uniformly on $N_j$.
+
+\begin{lemma}\label{lem:ident}
+$W_\eps(z)=G_{\sigma_\eps}(z)$ for $z\in N_j\cap\Hp$.
+\end{lemma}
+
+\begin{proof}
+Let $z\in N_j\cap\Hp$, $W=W_\eps(z)$ and $u=1/W\in U$. Put
+\[
+\omega_1=H_\eps(u)-a_\eps=u+B(W),\qquad \omega_2=z-B(W).
+\]
+Then $\omega_1\in\Hp$ because $H_\eps(u)\in V$, and $\operatorname{Im}\omega_2=\operatorname{Im}z+K(W)>0$. By Lemma~\ref{lem:inverse}, $F_{\tilde\lambda_\eps}(\omega_1)=F_{\lambda_\eps}(H_\eps(u))=u$. Since $\omega_2\in\Hp$ is near $x_j$, $A(\omega_2)=G_\kappa(\omega_2)$, so \eqref{eq:W} says $F_\kappa(\omega_2)=1/W=u$. Finally $\omega_1+\omega_2=z+u$. Lemma~\ref{lem:unique} gives $u=F_{\sigma_\eps}(z)$, that is $W=G_{\sigma_\eps}(z)$.
+\end{proof}
+
+Thus $G_{\sigma_\eps}$ extends holomorphically across the real interval $N_j\cap\R$, and by Stieltjes inversion $\sigma_\eps$ is absolutely continuous there with the real-analytic density
+\[
+f_\eps(x)=-\frac1\pi\operatorname{Im}W_\eps(x),\qquad x\in N_j\cap\R .
+\]
+
+\subsection{First-order expansion}
+Expanding \eqref{eq:W} with $W_\eps=A+O(t)$ and $B,B'=O(t)$ on $M$,
+\[
+W_\eps(z)=A(z)-A'(z)\,B(W_\eps(z))+O(t^2)=A(z)-A'(z)\,B(A(z))+O(t^2)
+\]
+uniformly on $N_j$, with constants independent of $\eps$. The remainder is holomorphic, so by Cauchy's estimates its derivative is also $O(t^2)$ on a smaller concentric disc. For real $x$ we have $A(x)=g(x)-ic$ and $A'(x)=g'(x)\in\R$, hence
+\[
+f_\eps(x)=q-\frac1\pi\,g'(x)\,K\bigl(A(x)\bigr)+O(t^2).
+\]
+As $x$ moves along the real axis, $A(x)$ moves horizontally with speed $g'(x)$, so $\frac{d}{dx}K(A(x))=g'(x)\,\partial_xK(A(x))$ and
+\begin{equation}\label{eq:fprime}
+f_\eps'(x)=-\frac1\pi\Bigl(g''(x)\,K\bigl(A(x)\bigr)+g'(x)^2\,\partial_xK\bigl(A(x)\bigr)\Bigr)+O(t^2).
+\end{equation}
+
+\subsection{Conclusion}
+At $x_1$, \eqref{eq:gvals}, \eqref{eq:fprime} and Lemma~\ref{lem:SP} give
+\[
+f_\eps'(x_1)=-\frac{g''(x_1)}{\pi}K(w_1)+O(t^2)\le-\frac{200000}{99\,\pi}\,t+O(t^2).
+\]
+At $x_2$,
+\[
+f_\eps'(x_2)\ge\frac1\pi\Bigl(\frac{64}5-\Bigl(\frac{128}{25}\Bigr)^2\frac5{12}\Bigr)t-O(t^2)=\frac{704}{375\,\pi}\,t-O(t^2).
+\]
+Since $t=t_\eps>0$ and $t_\eps\to0$, there is $\eps_1>0$ such that for $0<\eps<\eps_1$ the density $f_\eps$ of $\sigma_\eps$ is strictly decreasing near $x_1$ and strictly increasing near $x_2$. Then $\sigma_\eps$ is not unimodal: if $a$ were a mode, the density would be nondecreasing almost everywhere to the left of $a$, which forces $a\le x_1$, and nonincreasing to the right of $a$, which fails near $x_2>x_1$.
+
+Finally, $D_\eps(\mu\bp\nu_{1/\eps})=D_\eps\mu\bp D_\eps\nu_{1/\eps}=\lambda_\eps\bp\kappa$, and $\sigma_\eps$ is the translate of this measure by $-a_\eps$. Translations and positive dilations preserve unimodality, so $\mu\bp\nu_L$ is not unimodal for $L>1/\eps_1$. Each $\nu_L$ is unimodal with mode $0$, so $\mu$ is not freely strongly unimodal. Together with the remark on point masses in the introduction this proves Theorem~\ref{thm:main}. \qed
+
+\begin{remark}
+The atom of $\kappa$ is what makes $g'$ vanish at an interior point of the support, with $g''$ large there. The proof gives no explicit $L_0(\mu)$, since $t_\eps$ is not quantified in terms of $\mu$.
+\end{remark}
+
+\section{A numerical check}\label{sec:numerics}
+
+As an independent check of the sign pattern we computed the density of $\sigma\bp\kappa$ directly for small $\sigma$ of two kinds. For the semicircle law of variance $v$ the subordination equation reduces to $G(z)=G_\kappa\bigl(z-vG(z)\bigr)$, solved by fixed-point iteration at $z=x+10^{-13}i$; for the symmetric Bernoulli law on $\{\pm a\}$ we iterated $\omega\mapsto z+h(z+h_\kappa(\omega))$ with $h(w)=-a^2/w$. Central differences with step $10^{-5}$ gave the following.
+
+\begin{center}
+\begin{tabular}{lccc}
+law of $\sigma$ & $f'(0.01)$ & $f'(0.25)$ & interior local minimum\\\hline
+semicircle, variance $10^{-6}$ & $-9.99\times10^{-3}$ & $1.27\times10^{-5}$ & $x\approx0.020$\\
+semicircle, variance $10^{-4}$ & $-8.66\times10^{-1}$ & $1.26\times10^{-3}$ & $x\approx0.020$\\
+Bernoulli $\pm10^{-3}$ & $-9.99\times10^{-3}$ & $1.27\times10^{-5}$ & $x\approx0.020$
+\end{tabular}
+\end{center}
+
+\noindent In each case the density has an interior local minimum just to the right of $x_1$, as the proof predicts. These measures have finite variance, so they are covered by \cite[Theorem~3.10]{HU18}; the computation only confirms the mechanism. The arithmetic of Section~\ref{sec:proof} (the values \eqref{eq:gvals}, the bounds on $\Delta$, $\rho$ and $2r/\Delta$, and the two slopes) was also checked in exact rational and 50-digit arithmetic.
+
+\section*{Acknowledgements and funding}
+The research presented in this paper was supported by the European Research
+Council (ERC) under the European Union's Horizon Europe research and
+innovation programme (grant agreement No.~101041711), by the Simons
+Foundation as part of the Collaboration on the Mathematical and Scientific
+Foundations of Deep Learning, by Heights Labs, by Convex Nexus Capital, by
+the Israel Science Foundation (grant number 2258/19), and by the Israel
+Science Foundation (ISF Grant 4101/25). Computational resources were
+provided in part by Google Cloud through its education credits program
+(credit 530550103).
+
+\section*{Declaration of competing interest}
+The author holds equity in Heights Labs and in Convex Nexus Capital and
+has a management role at Convex Nexus Capital. These entities are included
+in the funding declaration above.
+
+\section*{Declaration of generative AI and AI-assisted technologies}
+The paper comes out of Math Brain, an ongoing project on the use of AI systems for research mathematics. In October 2026 a GPT-family model (OpenAI), running in the Codex command-line tool, found the proof of Theorem~\ref{thm:main}; a Claude model (Anthropic) reviewed it. In November 2026 Claude Opus~5.5 (Anthropic), working in Claude Code, checked the proof and its constants, wrote and ran the computations of Section~\ref{sec:numerics}, and wrote the paper. The author directed the work and is responsible for the content of the paper and for decisions concerning its dissemination.
+
+\section*{Data availability}
+No data were used. The code for the computations of Section~\ref{sec:numerics} and for the check of the constants, with their outputs, is available at\\ \url{https://github.com/yspennstate/free-strong-unimodality-point-masses}.
+
+\begin{thebibliography}{9}
+
+\bibitem{BB07}
+S.~T.~Belinschi and H.~Bercovici, A new approach to subordination results in free probability, \emph{J. Anal. Math.} \textbf{101} (2007), 357--365.
+
+\bibitem{BV93}
+H.~Bercovici and D.~V.~Voiculescu, Free convolution of measures with unbounded support, \emph{Indiana Univ. Math. J.} \textbf{42} (1993), 733--773.
+
+\bibitem{Bi98}
+P.~Biane, Processes with free increments, \emph{Math. Z.} \textbf{227} (1998), 143--174.
+
+\bibitem{HU18}
+T.~Hasebe and Y.~Ueda, Large time unimodality for classical and free Brownian motions with initial distributions, \emph{ALEA Lat. Am. J. Probab. Math. Stat.} \textbf{15} (2018), 353--374; arXiv:1710.08240.
+
+\bibitem{Sa13}
+K.~Sato, \emph{L\'evy Processes and Infinitely Divisible Distributions}, corrected paperback edition, Cambridge University Press, Cambridge, 2013.
+
+\bibitem{Vo93}
+D.~Voiculescu, The analogues of entropy and of Fisher's information measure in free probability theory, I, \emph{Comm. Math. Phys.} \textbf{155} (1993), 71--92.
+
+\end{thebibliography}
+\end{document}

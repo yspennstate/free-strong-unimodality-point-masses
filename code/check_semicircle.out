@@ -1,0 +1,3 @@
+semicircle var 1e-6: f'(0.01)=-9.985912e-03 f'(0.25)=1.267169e-05  interior local minima at x=[np.float64(0.0203)] (f=[np.float64(0.989975)])  mass check sum f dx over (0.004,0.6)=0.5900
+semicircle var 1e-4: f'(0.01)=-8.660569e-01 f'(0.25)=1.264054e-03  interior local minima at x=[np.float64(0.0199)] (f=[np.float64(0.98748)])  mass check sum f dx over (0.004,0.6)=0.5897
+Bernoulli +-1e-3: f'(0.01)=-9.985631e-03 f'(0.25)=1.267159e-05  interior local minima at x=[np.float64(0.0203)] (f=[np.float64(0.989975)])  mass check sum f dx over (0.004,0.6)=0.5900
